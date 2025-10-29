@@ -1,0 +1,9 @@
+{
+    "solidity.remappings": [
+        "@uniswap/v3-core/contracts/=lib/v3-core/contracts/",
+        "@uniswap/v3-periphery/contracts/=lib/v3-periphery/contracts/",
+        "forge-std/=lib/forge-std/src/"
+    ],
+    "solidity.packageDefaultDependenciesDirectory": "lib",
+    "solidity.packageDefaultDependenciesContractsDirectory": ""
+}
