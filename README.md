@@ -42,6 +42,12 @@ forge script script/EnableFee.s.sol \
   --rpc-url https://your-rpc.io/ \
   --broadcast
 
+# Get pool info
+PRIVATE_KEY=0xabc123... \
+POOL_ADDRESS=0xFactoryAddress \
+forge script script/GetPool.s.sol \
+  --rpc-url https://your-rpc.io/
+
 # Compute sqrtPriceX6 for initing pool
-node script/sqrtPriceX96-cli.js <decimals0> <decimals1> <amount0> <amount1>
+node script/sqrtPriceX96-cli.js <scaled> <decimals0> <decimals1> <amount0> <amount1>
 ```

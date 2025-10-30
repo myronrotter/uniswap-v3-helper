@@ -3,15 +3,16 @@ const JSBI = require('jsbi');
 const { encodeSqrtRatioX96 } = require('@uniswap/v3-sdk');
 
 function usageAndExit() {
-    console.log('Usage: node script/sqrtPriceX96-cli.js <decimals0> <decimals1> <amount0> <amount1>');
-    console.log('Example: node script/sqrtPriceX96-cli.js 18 6 1 3000');
+    console.log('Usage: node script/sqrtPriceX96-cli.js <scaled> <decimals0> <decimals1> <amount0> <amount1>');
+    console.log('Example: node script/sqrtPriceX96-cli.js false 18 6 1 3000');
     process.exit(1);
 }
 
 const argv = process.argv.slice(2);
-if (argv.length !== 4) usageAndExit();
+if (argv.length !== 5) usageAndExit();
 
-const [decimals0Raw, decimals1Raw, amount0Raw, amount1Raw] = argv;
+const [scaledRaw, decimals0Raw, decimals1Raw, amount0Raw, amount1Raw] = argv;
+const scaled = scaledRaw.toLowerCase() === 'true';
 const decimals0 = Number(decimals0Raw);
 const decimals1 = Number(decimals1Raw);
 if (!Number.isInteger(decimals0) || !Number.isInteger(decimals1)) {
@@ -25,11 +26,15 @@ const amount0 = amount0Raw;
 const amount1 = amount1Raw;
 
 try {
-    const scale0 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals0));
-    const scale1 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals1));
+    let scaledAmount0 = JSBI.BigInt(amount0);
+    let scaledAmount1 = JSBI.BigInt(amount1);
+    if (!scaled) {
+        const scale0 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals0));
+        const scale1 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals1));
 
-    const scaledAmount0 = JSBI.multiply(JSBI.BigInt(amount0), scale0);
-    const scaledAmount1 = JSBI.multiply(JSBI.BigInt(amount1), scale1);
+        scaledAmount0 = JSBI.multiply(JSBI.BigInt(amount0), scale0);
+        scaledAmount1 = JSBI.multiply(JSBI.BigInt(amount1), scale1);
+    }
 
     const sqrtPriceX96 = encodeSqrtRatioX96(scaledAmount1, scaledAmount0);
 

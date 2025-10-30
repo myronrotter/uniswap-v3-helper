@@ -5,6 +5,8 @@ import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {IUniswapV3Factory} from "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
 
+/// @title EnableFee
+/// @notice Enable fee tier for Uniswap V3 pools
 contract EnableFee is Script {
     function run() external {
         uint256 factoryOwnerPrivateKey = vm.envUint("PRIVATE_KEY");
