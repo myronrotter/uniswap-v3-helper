@@ -32,7 +32,8 @@ contract GetPool is Script {
         int24 tickSpacing = pool.tickSpacing();
         console.log("Current sqrtPriceX96:", sqrtPriceX96);
         console.log("Current tick:", tick);
-        console.log("Current feeProtocol:", feeProtocol);
+        console.log("Current feeProtocol0:", feeProtocol % 16);
+        console.log("Current feeProtocol1:", feeProtocol >> 4);
         console.log("Current factory:", factory);
         console.log("Current token0:", token0);
         console.log("Current token1:", token1);
