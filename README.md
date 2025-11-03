@@ -43,7 +43,6 @@ forge script script/EnableFee.s.sol \
   --broadcast
 
 # Get pool info
-PRIVATE_KEY=0xabc123... \
 POOL_ADDRESS=0xFactoryAddress \
 forge script script/GetPool.s.sol \
   --rpc-url https://your-rpc.io/
