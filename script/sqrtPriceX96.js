@@ -8,6 +8,9 @@ function usageAndExit() {
     process.exit(1);
 }
 
+console.log('Compute sqrtPriceX96 from token amounts.');
+console.log('Note that addresses for token0 < token1.');
+
 const argv = process.argv.slice(2);
 if (argv.length !== 5) usageAndExit();
 

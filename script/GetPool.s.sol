@@ -8,17 +8,11 @@ import {IUniswapV3Pool} from "@uniswap/v3-core/contracts/interfaces/IUniswapV3Po
 /// @title GetPool
 /// @notice Get Uniswap V3 pool info
 contract GetPool is Script {
-    function run() external {
-        uint256 privateKey = vm.envUint("PRIVATE_KEY");
+    function run() external view {
         address poolAddress = vm.envAddress("POOL_ADDRESS");
-
-        address user = vm.addr(privateKey);
 
         console.log("Get Uniswap V3 pool info");
         console.log("Pool:", poolAddress);
-        console.log("Running as:", user);
-
-        vm.startBroadcast(privateKey);
 
         IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
 
@@ -40,7 +34,5 @@ contract GetPool is Script {
         console.log("Current fee:", fee);
         console.log("Current liquidity:", liquidity);
         console.log("Current tickSpacing:", tickSpacing);
-
-        vm.stopBroadcast();
     }
 }
