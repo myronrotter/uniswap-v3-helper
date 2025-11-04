@@ -47,6 +47,11 @@ POOL_ADDRESS=0xFactoryAddress \
 forge script script/GetPool.s.sol \
   --rpc-url https://your-rpc.io/
 
+# Get order of addresses
+TOKEN_0_ADDRESS=0xtoken0 \
+TOKEN_1_ADDRESS=0xtoken1 \
+forge script script/AddressOrder.s.sol
+
 # Compute sqrtPriceX6 for initing pool
-node script/sqrtPriceX96-cli.js <scaled> <decimals0> <decimals1> <amount0> <amount1>
+pnpm run compute:sqrtPriceX96 <scaled> <decimals0> <decimals1> <amount0> <amount1>
 ```
