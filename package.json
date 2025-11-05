@@ -8,7 +8,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.18.3",
   "scripts": {
-    "compute:sqrtPriceX96": "node ./script/sqrtPriceX96.js"
+    "compute:sqrtPriceX96": "node ./script/sqrtPriceX96.js",
+    "compute:price": "node ./script/price.js"
   },
   "dependencies": {
     "@uniswap/sdk-core": "^7.8.0",

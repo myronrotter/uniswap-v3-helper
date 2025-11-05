@@ -53,5 +53,10 @@ TOKEN_1_ADDRESS=0xtoken1 \
 forge script script/AddressOrder.s.sol
 
 # Compute sqrtPriceX6 for initing pool
-pnpm run compute:sqrtPriceX96 <scaled> <decimals0> <decimals1> <amount0> <amount1>
+# Note that amounts need to be scaled and token0 < token1
+pnpm run compute:sqrtPriceX96 <amount0> <amount1>
+
+# Compute price from sqrtPriceX96
+# Note that the price is as token0 per 1 token1.
+pnpm run compute:sqrtPriceX96 <amount0> <amount1>
 ```

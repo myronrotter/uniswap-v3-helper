@@ -3,46 +3,26 @@ const JSBI = require('jsbi');
 const { encodeSqrtRatioX96 } = require('@uniswap/v3-sdk');
 
 function usageAndExit() {
-    console.log('Usage: node script/sqrtPriceX96-cli.js <scaled> <decimals0> <decimals1> <amount0> <amount1>');
-    console.log('Example: node script/sqrtPriceX96-cli.js false 18 6 1 3000');
+    console.log('Usage: node script/sqrtPriceX96.js <amount0> <amount1>');
+    console.log('Example: node script/sqrtPriceX96.js 3700000000 1000000000000000000');
     process.exit(1);
 }
 
 console.log('Compute sqrtPriceX96 from token amounts.');
 console.log('Note that addresses for token0 < token1.');
+console.log('Note that amounts need to be scaled with respect to their decimals')
 
 const argv = process.argv.slice(2);
-if (argv.length !== 5) usageAndExit();
+if (argv.length !== 2) usageAndExit();
 
-const [scaledRaw, decimals0Raw, decimals1Raw, amount0Raw, amount1Raw] = argv;
-const scaled = scaledRaw.toLowerCase() === 'true';
-const decimals0 = Number(decimals0Raw);
-const decimals1 = Number(decimals1Raw);
-if (!Number.isInteger(decimals0) || !Number.isInteger(decimals1)) {
-    console.error('decimals must be integers');
-    usageAndExit();
-}
-
-// amount strings are interpreted as integer token amounts in whole tokens (not smallest unit),
-// caller may pass already-scaled numbers if desired.
-const amount0 = amount0Raw;
-const amount1 = amount1Raw;
+const [amount0Raw, amount1Raw] = argv;
 
 try {
-    let scaledAmount0 = JSBI.BigInt(amount0);
-    let scaledAmount1 = JSBI.BigInt(amount1);
-    if (!scaled) {
-        const scale0 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals0));
-        const scale1 = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(decimals1));
-
-        scaledAmount0 = JSBI.multiply(JSBI.BigInt(amount0), scale0);
-        scaledAmount1 = JSBI.multiply(JSBI.BigInt(amount1), scale1);
-    }
+    let scaledAmount0 = JSBI.BigInt(amount0Raw);
+    let scaledAmount1 = JSBI.BigInt(amount1Raw);
 
     const sqrtPriceX96 = encodeSqrtRatioX96(scaledAmount1, scaledAmount0);
 
-    console.log('decimals0 =', decimals0, 'decimals1 =', decimals1);
-    console.log('amount0 =', amount0, 'amount1 =', amount1);
     console.log('scaledAmount0 =', scaledAmount0.toString());
     console.log('scaledAmount1 =', scaledAmount1.toString());
     console.log('sqrtPriceX96 (dec) =', sqrtPriceX96.toString());
