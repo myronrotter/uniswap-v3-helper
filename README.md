@@ -58,5 +58,5 @@ pnpm run compute:sqrtPriceX96 <amount0> <amount1>
 
 # Compute price from sqrtPriceX96
 # Note that the price is as token0 per 1 token1.
-pnpm run compute:sqrtPriceX96 <amount0> <amount1>
+pnpm run compute:price <sqrtPriceX96>
 ```
